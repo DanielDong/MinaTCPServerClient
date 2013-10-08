@@ -19,7 +19,7 @@ public class MinaTCPClient extends IoHandlerAdapter{
 	private static IoSession session;
 	private boolean rcvd = false;
 	
-	public MinaTCPClient (){
+	public MinaTCPClient (String remoteAddress){
 		session = null;
 		connector = new NioSocketConnector();
 		connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
@@ -27,7 +27,7 @@ public class MinaTCPClient extends IoHandlerAdapter{
 		connector.getSessionConfig().setMaxReadBufferSize(1024);
 		connector.getSessionConfig().setMinReadBufferSize(1024);
 		
-		ConnectFuture future = connector.connect(new InetSocketAddress("localhost", MinaTCPServer.PORT));
+		ConnectFuture future = connector.connect(new InetSocketAddress(remoteAddress, MinaTCPServer.PORT));
 		future.awaitUninterruptibly();
 		session = future.getSession();
 		session.write("HELLO FROM CLIENT MINA...");
@@ -39,7 +39,8 @@ public class MinaTCPClient extends IoHandlerAdapter{
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws InterruptedException {
-		MinaTCPClient client = new MinaTCPClient();
+		String remoteAddr = args[0];
+		MinaTCPClient client = new MinaTCPClient(remoteAddr);
 		// Make sure session has a value.
 		while(session == null);
 		
