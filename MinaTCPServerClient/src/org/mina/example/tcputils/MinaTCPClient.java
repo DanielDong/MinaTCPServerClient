@@ -71,7 +71,7 @@ public class MinaTCPClient extends IoHandlerAdapter{
 	public void sessionCreated(IoSession session) throws Exception {
 		// TODO Auto-generated method stub
 		InetSocketAddress socketAddr = (InetSocketAddress) session.getRemoteAddress();
-		String hostName = socketAddr.getHostName();
+		String hostName = socketAddr.getAddress().getHostAddress();
 		int port = socketAddr.getPort();
 		System.out.println(hostName + "|" + port+ " joined.");
 	}

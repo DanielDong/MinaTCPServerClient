@@ -96,7 +96,7 @@ public void sessionOpened(IoSession session) throws Exception {
 @Override
 public void sessionClosed(IoSession session) throws Exception {
 	// TODO Auto-generated method stub
-	String hostName = ((InetSocketAddress)(session.getRemoteAddress())).getHostName() ;
+	String hostName = ((InetSocketAddress)(session.getRemoteAddress())).getAddress().getHostAddress() ;
 	int hostPort = ((InetSocketAddress)(session.getRemoteAddress())).getPort();
 	System.out.println(hostName+ "|" + hostPort + " has left!");
 	
